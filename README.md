@@ -20,6 +20,7 @@ device simulation, testing, and deployment.
 ## Projects
 
 - [Portable microcontroller Blink](Projects/Embedded/Blink/)
+- [Concurrent ESP32 Wi-Fi Scanner](Projects/Embedded/ConcurrentWifiScanner/)
 
 The difficulty directories contain Hack The Box Hardware, ICS, and satellite
 challenges. Standalone embedded development tutorials belong under `Projects/`.
