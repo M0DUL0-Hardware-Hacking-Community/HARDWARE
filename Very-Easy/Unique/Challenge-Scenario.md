@@ -1,0 +1,1 @@
+We found a car but we are unable to identify if it's the exact one that we have been searching for. The serial network of the car seems intact so we tapped into it and collected some packets. Can you help us find the VIN of the car that is transmitted repeatedly over the network?

@@ -1,0 +1,1 @@
+We found a heavily modified module containing legacy hardware merged with corrupted components. We believe the legacy module can access the memory area where the secret key is stored and output it to its console. Unfortunately, the legacy IC we have is unable to reach that address due to a hardware bug.

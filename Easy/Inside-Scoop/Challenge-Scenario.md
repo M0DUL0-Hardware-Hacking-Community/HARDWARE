@@ -1,0 +1,1 @@
+Before we start our mission, we need to be sure that we won't raise any alarms. Our inside informant has given us knowledge of an API that is used by the security system installed in the facility. The state-of-the-art security surveillance system uses whitelist-based face recognition, so we won’t be able to pass through. We’ll need to access the interface and stop the feed!

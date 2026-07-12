@@ -1,0 +1,1 @@
+Secret Intelligent Service believes that a threat actor is hiding in a garage with some critical evidence. The field team intercepted the garage communication, which revealed that a passive low-frequency interface device is being used. Due to some interference, the signal required to open the garage door is corrupted. Can you help us with this situation?
