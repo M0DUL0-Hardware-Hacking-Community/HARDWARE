@@ -10,7 +10,7 @@ constexpr std::int32_t kMinimumTemperature{-40'000};
 constexpr std::int32_t kMaximumTemperature{125'000};
 constexpr std::uint32_t kMaximumHumidity{100'000U};
 
-}  // namespace
+} // namespace
 
 DeviceStatus prepare_telemetry(const SensorReading& reading, DeviceState& state,
                                Telemetry& telemetry) noexcept {
@@ -30,4 +30,4 @@ DeviceStatus prepare_telemetry(const SensorReading& reading, DeviceState& state,
   return DeviceStatus::ok;
 }
 
-}  // namespace power10
+} // namespace power10

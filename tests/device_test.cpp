@@ -16,7 +16,7 @@ int report_failure(const char* const message) {
   return 1;
 }
 
-}  // namespace
+} // namespace
 
 int run_device_tests() {
   power10::DeviceState state{};

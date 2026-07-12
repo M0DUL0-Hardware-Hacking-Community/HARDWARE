@@ -24,4 +24,4 @@ CycleStatus run_device_cycle(DeviceState& state) noexcept {
   return CycleStatus::ok;
 }
 
-}  // namespace power10::firmware
+} // namespace power10::firmware

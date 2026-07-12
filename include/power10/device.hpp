@@ -24,6 +24,6 @@ enum class DeviceStatus { ok, invalid_temperature, invalid_humidity, sequence_ex
 [[nodiscard]] DeviceStatus prepare_telemetry(const SensorReading& reading, DeviceState& state,
                                              Telemetry& telemetry) noexcept;
 
-}  // namespace power10
+} // namespace power10
 
 #endif

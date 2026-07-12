@@ -36,4 +36,4 @@ Status calculate_statistics(const std::span<const int> samples, Statistics& outp
   return Status::ok;
 }
 
-}  // namespace power10
+} // namespace power10

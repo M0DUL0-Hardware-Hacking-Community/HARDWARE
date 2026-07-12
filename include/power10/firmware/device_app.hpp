@@ -9,6 +9,6 @@ enum class CycleStatus { ok, sensor_error, data_error, publish_error };
 
 [[nodiscard]] CycleStatus run_device_cycle(DeviceState& state) noexcept;
 
-}  // namespace power10::firmware
+} // namespace power10::firmware
 
 #endif

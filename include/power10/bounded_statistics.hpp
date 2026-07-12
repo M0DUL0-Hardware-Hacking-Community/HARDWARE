@@ -19,6 +19,6 @@ struct Statistics final {
 [[nodiscard]] Status calculate_statistics(std::span<const int> samples,
                                           Statistics& output) noexcept;
 
-}  // namespace power10
+} // namespace power10
 
 #endif

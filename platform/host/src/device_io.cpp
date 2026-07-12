@@ -22,4 +22,4 @@ IoStatus publish_telemetry(const Telemetry& telemetry) noexcept {
   return IoStatus::ok;
 }
 
-}  // namespace power10::platform
+} // namespace power10::platform

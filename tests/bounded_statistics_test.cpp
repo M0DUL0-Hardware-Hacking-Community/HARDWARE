@@ -41,7 +41,7 @@ int test_invalid_sizes() {
   return 0;
 }
 
-}  // namespace
+} // namespace
 
 int main() {
   const int valid_result{test_valid_samples()};

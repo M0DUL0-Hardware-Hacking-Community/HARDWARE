@@ -10,6 +10,6 @@ inline constexpr std::size_t kDeviceIdCapacity{24U};
 inline constexpr std::uint32_t kPublishPeriodMilliseconds{1'000U};
 inline constexpr std::uint32_t kMaximumHostCycles{10U};
 
-}  // namespace power10::config
+} // namespace power10::config
 
 #endif
