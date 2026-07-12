@@ -1,0 +1,1 @@
+The final step of this operation is to retrieve the contents of the safebox locked in the next room. It appears the device also has anti-tampering mechanisms that will lock it and destroy its contents, so we must be careful. The team is setting up a remote lab for you to access parts of the device and try to bypass its security mechanism.

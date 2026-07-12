@@ -1,0 +1,1 @@
+One of our embedded devices has been compromised. It was flashing a message on the debug matrix that was too fast to read, although we managed to capture one iteration of it. We must find out what was displayed. To help you with your mission, we will also provide you with the fabrication files of the PCB module the matrix was on.

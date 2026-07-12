@@ -1,0 +1,1 @@
+The Dressrosa Reactor hums with stability, quietly generating power under tight control. But beneath its calm surface lies an exploitable weakness. Breach the OPC-UA PLC interface, seize control of the system, and trigger a meltdown.

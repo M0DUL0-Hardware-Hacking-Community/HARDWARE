@@ -1,0 +1,1 @@
+We captured the embedded device that was used to encrypt the ciphers we need to break. Our field agent has set up a remote lab to facilitate remote exploitation of the device so that we can recover its Encryption Key.

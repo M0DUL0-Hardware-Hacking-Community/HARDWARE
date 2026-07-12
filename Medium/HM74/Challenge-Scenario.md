@@ -1,0 +1,1 @@
+It seems that the vesel transmits data into space. Our scientists managed to extract a module. It seems like a hamming encoder is implemented but there is a lot of noise and they couldn't decode the message. Can you?
