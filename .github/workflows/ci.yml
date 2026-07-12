@@ -1,0 +1,41 @@
+name: ci
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  build-test-analyze:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - compiler: gcc
+            cc: gcc
+            cxx: g++
+            preset: dev
+          - compiler: clang
+            cc: clang
+            cxx: clang++
+            preset: analysis
+    name: Linux (${{ matrix.compiler }})
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install tools
+        run: sudo apt-get update && sudo apt-get install -y g++ clang clang-format clang-tidy cppcheck
+      - name: Configure
+        run: cmake --preset ${{ matrix.preset }}
+        env:
+          CC: ${{ matrix.cc }}
+          CXX: ${{ matrix.cxx }}
+      - name: Build and analyze
+        run: cmake --build --preset ${{ matrix.preset }}
+      - name: Test
+        run: ctest --test-dir build/${{ matrix.preset }} --output-on-failure
+      - name: Check formatting
+        run: find apps firmware include platform src tests -type f \( -name '*.cpp' -o -name '*.hpp' \) -exec clang-format --dry-run --Werror {} +
+      - name: Run cppcheck
+        run: cppcheck --project=build/${{ matrix.preset }}/compile_commands.json --enable=warning,style,performance,portability --error-exitcode=1 --suppress=missingIncludeSystem

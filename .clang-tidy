@@ -1,0 +1,15 @@
+Checks: >
+  -*,
+  bugprone-*,
+  clang-analyzer-*,
+  modernize-use-nullptr,
+  performance-*,
+  portability-*,
+  readability-duplicate-include,
+  readability-function-size,
+  readability-redundant-*
+WarningsAsErrors: '*'
+HeaderFilterRegex: '^(include|src)/.*'
+CheckOptions:
+  readability-function-size.LineThreshold: 60
+  readability-function-size.StatementThreshold: 40

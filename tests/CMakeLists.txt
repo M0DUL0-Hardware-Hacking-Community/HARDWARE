@@ -1,0 +1,3 @@
+add_executable(power10_tests bounded_statistics_test.cpp device_test.cpp)
+target_link_libraries(power10_tests PRIVATE power10 project_warnings)
+add_test(NAME power10_tests COMMAND power10_tests)

@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/power10/telemetry.schema.json",
+  "title": "Power10 telemetry",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["sequence", "temperature_millicelsius", "humidity_millipercent"],
+  "properties": {
+    "sequence": { "type": "integer", "minimum": 0, "maximum": 4294967294 },
+    "temperature_millicelsius": { "type": "integer", "minimum": -40000, "maximum": 125000 },
+    "humidity_millipercent": { "type": "integer", "minimum": 0, "maximum": 100000 }
+  }
+}
