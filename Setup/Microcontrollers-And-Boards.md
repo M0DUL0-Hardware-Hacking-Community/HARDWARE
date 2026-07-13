@@ -108,7 +108,7 @@ Direct catalogs:
 
 | Goal | Starting point | Important additions |
 | --- | --- | --- |
-| Learn bare-metal C/C++ | Pico RP2040 | Micro-USB data cable, headers, breadboard |
+| Learn bare-metal C | Pico RP2040 | Micro-USB data cable, headers, breadboard |
 | Learn newer secure MCU features | Pico 2 RP2350 | Micro-USB data cable, Pico SDK 2.0+, optional debug probe |
 | Add Wi-Fi/Bluetooth to MCU work | Pico W or Pico 2 W | Wireless-capable SDK adapter and antenna clearance |
 | Run Linux IoT services | Raspberry Pi 5 or Pi 4 | Correct PSU, storage, cooling, case, micro-HDMI cable |

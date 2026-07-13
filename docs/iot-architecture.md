@@ -9,10 +9,10 @@ The project separates safety-critical logic from vendor SDKs and operating syste
 - `platform/<target>` is where an MCU, RTOS, modem, or board adapter belongs.
 - `cmake/toolchains` contains cross-compilation definitions.
 
-Platform adapters implement `power10/platform/device_io.hpp`. Keep SDK headers and
+Platform adapters implement `power10/platform/device_io.h`. Keep SDK headers and
 conditional compilation inside the adapter; neither may leak into `src` or public
-domain interfaces. The interface deliberately avoids callbacks, dynamic ownership,
-and exceptions.
+domain interfaces. Public C functions and types use the `power10_` prefix. The
+interface deliberately avoids callbacks and hidden ownership.
 
 Device secrets, certificates, Wi-Fi credentials, and production endpoints must not
 be committed. Provision them with the target's secure storage. Network transports

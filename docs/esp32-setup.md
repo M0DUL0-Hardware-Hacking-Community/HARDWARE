@@ -1,8 +1,8 @@
 # ESP32 Development Environment
 
-ESP32 development in this repository uses the same small Arduino Blink source as the
-other configured PlatformIO boards. A native target can reproduce the behavior with
-ESP-IDF GPIO and delay APIs.
+ESP32 development in this repository builds the C11 Blink application with ESP-IDF
+through PlatformIO. The application uses ESP-IDF GPIO and delay APIs directly; it
+does not use the Arduino framework.
 
 Official references:
 
@@ -58,9 +58,9 @@ idf.py -p /dev/ttyUSB0 flash monitor
 Replace `esp32` with the actual chip, such as `esp32c3` or `esp32s3`, and replace the
 port for the host operating system. Exit the serial monitor with `Ctrl+]`.
 
-The current Blink directory is a PlatformIO Arduino project, not an ESP-IDF project.
-Native ESP-IDF support requires a `targets/esp-idf/` project whose `app_main()` uses
-ESP-IDF GPIO and delay APIs.
+The Blink directory is a PlatformIO project that selects the ESP-IDF framework. A
+standalone `idf.py` project would need its own ESP-IDF `CMakeLists.txt` and component
+layout, but can reuse the same C application behavior.
 
 ## USB and boot mode
 

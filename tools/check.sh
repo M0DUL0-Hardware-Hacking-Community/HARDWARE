@@ -10,7 +10,7 @@ check_format() {
     Projects/Embedded/Blink/targets/pico-sdk \
     Projects/Embedded/ConcurrentWifiScanner/src \
     Projects/Embedded/ConcurrentWifiScanner/tests \
-    -type f \( -name '*.cpp' -o -name '*.hpp' \) \
+    -type f \( -name '*.c' -o -name '*.h' \) \
     -exec "$@" --dry-run --Werror {} +
 }
 
@@ -42,9 +42,9 @@ if command -v cppcheck >/dev/null 2>&1; then
   cppcheck --project="$scanner_dir/build/tests/compile_commands.json" \
     --enable=warning,style,performance,portability --error-exitcode=1 --inline-suppr \
     --suppress=missingIncludeSystem
-  cppcheck Projects/Embedded/Blink/src/main.cpp Projects/Embedded/Blink/targets/pico-sdk/main.cpp \
-    --std=c++11 --enable=warning,style,performance,portability --error-exitcode=1 \
+  cppcheck Projects/Embedded/Blink/src/main.c Projects/Embedded/Blink/targets/pico-sdk/main.c \
+    --force --std=c11 --enable=warning,style,performance,portability --error-exitcode=1 \
     --suppress=missingInclude --suppress=missingIncludeSystem -DBLINK_LED_PIN=2 \
-    -DBLINK_LED_ACTIVE_LOW=0 -DHIGH=1 -DLOW=0 -DOUTPUT=1 \
+    -DBLINK_LED_ACTIVE_LOW=0 -DBLINK_HALF_PERIOD_MS=500 \
     -DPICO_DEFAULT_LED_PIN=25 -DGPIO_OUT=1
 fi

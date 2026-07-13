@@ -2,7 +2,8 @@
 
 PlatformIO provides one project format and command-line interface across many
 microcontroller families. The Blink project currently defines environments for
-ESP32 DOIT DevKit V1, Arduino Uno, STM32 Nucleo F401RE, and Raspberry Pi Pico RP2040.
+ESP32 DOIT DevKit V1, Arduino Uno, and STM32 Nucleo F401RE. Pico and Pico 2 use the
+native Pico SDK target documented separately.
 
 Official references:
 
@@ -84,11 +85,13 @@ From `Projects/Embedded/Blink`:
 pio run -e esp32devkit_v1
 pio run -e uno
 pio run -e nucleo_f401re
-pio run -e pico_rp2040
 ```
 
-PlatformIO downloads the selected compiler, framework, uploader, and board metadata
-on first use. This can take several minutes and requires network access.
+PlatformIO compiles `src/main.c` as C11. The ESP32 environment uses ESP-IDF, the Uno
+environment uses AVR GCC and avr-libc without a framework, and the STM32 environment
+uses STM32Cube. PlatformIO downloads the selected compiler, SDK/framework, uploader,
+and board metadata on first use. This can take several minutes and requires network
+access.
 
 Build and upload one target:
 
@@ -128,7 +131,7 @@ version:
 [env:esp32devkit_v1]
 platform = espressif32@7.0.1
 board = esp32doit-devkit-v1
-framework = arduino
+framework = espidf
 ```
 
 Do not blindly copy version numbers from another project. Use `pio pkg list` to
@@ -136,7 +139,7 @@ record the actual framework, compiler, and uploader versions too.
 
 ## Troubleshooting
 
-- **Source is not compiled:** PlatformIO expects application sources under `src/`.
+- **C source is not compiled:** PlatformIO expects application sources under `src/`.
 - **Library is not found:** private reusable code belongs under `lib/<name>/src/`.
 - **Wrong environment builds:** pass `-e <environment>` or check `default_envs`.
 - **Upload cannot open port:** close serial monitors and install the correct USB rules.

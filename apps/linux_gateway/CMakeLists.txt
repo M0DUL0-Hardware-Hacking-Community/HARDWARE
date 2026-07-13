@@ -1,2 +1,2 @@
-add_executable(power10_iot_sim main.cpp)
+add_executable(power10_iot_sim main.c)
 target_link_libraries(power10_iot_sim PRIVATE power10_firmware project_warnings)

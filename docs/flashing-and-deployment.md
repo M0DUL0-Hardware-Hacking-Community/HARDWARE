@@ -37,8 +37,8 @@ targets/
     pico/
 ```
 
-Portable code remains in `include/`, `src/`, and `firmware/`. A platform adapter
-implements `power10/platform/device_io.hpp` using the target SDK. Each
+Portable C11 code remains in `include/`, `src/`, and `firmware/`. A platform adapter
+implements `power10/platform/device_io.h` using the target SDK. Each
 `targets/<board>/` directory owns:
 
 - Vendor SDK initialization
@@ -62,12 +62,12 @@ targets/esp32/
 ├── sdkconfig.defaults
 └── main/
     ├── CMakeLists.txt
-    ├── app_main.cpp
-    └── device_io.cpp
+    ├── app_main.c
+    └── device_io.c
 ```
 
-`device_io.cpp` implements the platform interface with ESP-IDF sensor, network, and
-transport APIs. `app_main.cpp` initializes the device and invokes the bounded
+`device_io.c` implements the platform interface with ESP-IDF sensor, network, and
+transport APIs. `app_main.c` initializes the device and invokes the bounded
 firmware cycle. The ESP-IDF component can compile the portable sources from `src/`
 and `firmware/`.
 
@@ -149,8 +149,8 @@ to produce an ELF and UF2 firmware image. A target can be arranged as:
 targets/pico/
 ├── CMakeLists.txt
 ├── pico_sdk_import.cmake
-├── main.cpp
-└── device_io.cpp
+├── main.c
+└── device_io.c
 ```
 
 There are two common deployment methods:
@@ -179,7 +179,7 @@ For an STM32, Nordic nRF, RP2040/RP2350, or another MCU:
 
 1. Install the vendor-supported SDK and compiler.
 2. Add `targets/<family>/` with the SDK entry point and build integration.
-3. Add `platform/<family>/` implementing `device_io.hpp`.
+3. Add `platform/<family>/` implementing `device_io.h`.
 4. Link or include the portable `power10` sources without modifying their behavior.
 5. Add a documented CMake preset or vendor build command.
 6. Add separate commands for build, flash, monitor, and debug.

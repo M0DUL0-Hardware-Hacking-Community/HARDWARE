@@ -1,6 +1,6 @@
 # HARDWARE
 
-Hardware hacking resources and a portable C++20 environment for IoT firmware,
+Hardware hacking resources and a portable C11 environment for IoT firmware,
 device simulation, testing, and deployment.
 
 ## Repository Areas
@@ -24,19 +24,18 @@ device simulation, testing, and deployment.
 The difficulty directories contain Hack The Box Hardware, ICS, and satellite
 challenges. Standalone embedded development tutorials belong under `Projects/`.
 
-## C++ and IoT Development
+## C and IoT Development
 
-The repository includes a dependency-free C++20 IoT project using a documented
-adaptation of Gerard J. Holzmann's *The Power of 10: Rules for Developing
-Safety-Critical Code*. The original paper targets C; [the coding
-standard](docs/coding-standard.md) defines this project's C++ interpretation.
+The repository includes a dependency-free C11 IoT project following Gerard J.
+Holzmann's *The Power of 10: Rules for Developing Safety-Critical Code*. See the
+project's [coding standard](docs/coding-standard.md) for the enforced C subset.
 
 The project keeps portable domain logic separate from firmware, platform adapters,
 board targets, and host applications.
 
 ### Build and test
 
-Prerequisites are CMake 3.25+ and a C++20 compiler. CMake selects the platform's
+Prerequisites are CMake 3.25+ and a C11 compiler. CMake selects the platform's
 native build backend automatically. Make, Ninja, Xcode, and Visual Studio can also
 be selected explicitly with CMake's `-G` option.
 

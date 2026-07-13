@@ -8,22 +8,22 @@ SDK-owned Python packages into the same global Python installation.
 
 | Target | Unified workflow | Vendor-native workflow |
 | --- | --- | --- |
-| ESP32 DOIT DevKit V1 | [PlatformIO](platformio-setup.md) | [ESP-IDF](esp32-setup.md) |
-| Arduino Uno / AVR | [PlatformIO](platformio-setup.md) | [Arduino CLI](arduino-avr-setup.md) |
-| STM32 Nucleo F401RE | [PlatformIO](platformio-setup.md) | [STM32Cube](stm32-setup.md) |
-| Raspberry Pi Pico RP2040 | PlatformIO or Pico SDK | [Pico SDK](raspberry-pi-pico-setup.md) |
+| ESP32 DOIT DevKit V1 | [PlatformIO with ESP-IDF](platformio-setup.md) | [ESP-IDF](esp32-setup.md) |
+| Arduino Uno / AVR | [PlatformIO with AVR GCC](platformio-setup.md) | [AVR GCC and avr-libc](arduino-avr-setup.md) |
+| STM32 Nucleo F401RE | [PlatformIO with STM32Cube](platformio-setup.md) | [STM32Cube](stm32-setup.md) |
+| Raspberry Pi Pico RP2040 | Pico SDK | [Pico SDK](raspberry-pi-pico-setup.md) |
 | Raspberry Pi Pico 2 RP2350 | Native example only | [Pico SDK](raspberry-pi-pico-setup.md) |
 
-PlatformIO builds the same small Arduino source for ESP32, AVR, STM32, and RP2040.
-The repository also contains an unverified native Pico SDK example for RP2040 and
-RP2350. ESP-IDF, STM32 HAL, Zephyr, and other native environments need their own
-small GPIO/delay adapter.
+PlatformIO builds the same small C11 source with ESP-IDF, AVR GCC/avr-libc, and
+STM32Cube for the configured ESP32, Uno, and STM32 targets. The repository also
+contains an unverified native C Pico SDK example for RP2040 and RP2350. Zephyr and
+other native environments need their own small GPIO/delay adapter.
 
 ## Guides
 
 - [PlatformIO on Windows, macOS, and Linux](platformio-setup.md)
 - [ESP32 with PlatformIO and ESP-IDF](esp32-setup.md)
-- [Arduino AVR and Arduino Uno](arduino-avr-setup.md)
+- [AVR and Arduino Uno](arduino-avr-setup.md)
 - [STM32 and Nucleo boards](stm32-setup.md)
 - [Raspberry Pi Pico RP2040 and Pico 2 RP2350](raspberry-pi-pico-setup.md)
 - [Adding other microcontroller families](adding-microcontroller-platforms.md)

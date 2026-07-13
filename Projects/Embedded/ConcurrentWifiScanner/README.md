@@ -1,8 +1,9 @@
 # Bounded Passive Wi-Fi Scanner
 
-An ESP32 application that passively surveys the 2.4 GHz channels permitted by the
-configured regulatory country, blinks an activity LED during each scan, and prints
-one detailed report after the bounded run.
+A C11 ESP32 application that passively surveys the 2.4 GHz channels permitted by
+the configured regulatory country, blinks an activity LED during each scan, and
+prints one detailed report after the bounded run. All project application and host
+test sources are native C; there are no C++ application sources or language features.
 
 The ESP32 has one Wi-Fi radio, so it cannot listen to every channel at the same
 instant. It scans the allowed channels sequentially while a separate LED task runs
@@ -13,12 +14,12 @@ deauthenticates clients, or intentionally sends probe requests.
 
 ```text
 ConcurrentWifiScanner/
-├── src/main.cpp                 # ESP-IDF scan, LED, lifecycle, and reporting
-├── src/network_catalog.*      # Fixed-capacity BSSID aggregation
-├── src/security_assessment.*  # Deterministic beacon-security labels
-├── tests/                     # Native host tests
-├── platformio.ini             # ESP32 DevKit V1 build configuration
-└── POWER_OF_TEN.md            # Application-rule evidence and deviations
+├── src/main.c                    # ESP-IDF scan, LED, lifecycle, and reporting
+├── src/network_catalog.c/.h     # Fixed-capacity BSSID aggregation
+├── src/security_assessment.c/.h # Deterministic beacon-security labels
+├── tests/                       # Native C11 host test
+├── platformio.ini               # ESP32 DevKit V1 build configuration
+└── POWER_OF_TEN.md              # Application-rule evidence and deviations
 ```
 
 `app_main` owns the Wi-Fi driver, scan results, catalog, and final report. One
@@ -32,7 +33,7 @@ configured as an active-high activity LED; confirm that pin and polarity against
 exact board schematic before connecting an external LED, and use a suitable
 current-limiting resistor.
 
-The regulatory country is `MY`. Change `kCountryCode` in `src/main.cpp` only when the
+The regulatory country is `MY`. Change `COUNTRY_CODE` in `src/main.c` only when the
 board will operate in another country, and use that country's supported ESP-IDF
 country code. This setting determines which 2.4 GHz channels the radio may scan.
 
@@ -76,13 +77,16 @@ safe or vulnerable. Raw information elements, client discovery, vendor lookup,
 
 ## Host validation
 
-Build and run the portable catalog and security tests before using a board:
+Build and run the strict ISO C11 catalog and security test before using a board:
 
 ```sh
 cmake -S tests -B build/tests -DCMAKE_BUILD_TYPE=Debug
 cmake --build build/tests
 ctest --test-dir build/tests --output-on-failure
 ```
+
+The firmware component uses GNU C11 because ESP-IDF's Xtensa headers require GNU
+inline assembly; project application code itself stays within C11.
 
 ## Build, flash, and monitor
 

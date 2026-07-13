@@ -1,8 +1,7 @@
 # Adding Other Microcontroller Platforms
 
 No build system or binary is universal across all microcontrollers. Portability means
-sharing the application source where a common framework exists and keeping native
-SDK adapters small.
+sharing C11 application logic where practical and keeping native SDK adapters small.
 
 ## Common vendor environments
 
@@ -21,15 +20,17 @@ architecture even when all three major desktop operating systems are listed.
 
 ## Repository structure
 
-The Blink example uses one Arduino source for several board families and keeps native
-SDK adapters separate:
+The Blink example uses one native C source for its PlatformIO board families and a
+separate Pico SDK entry point:
 
 ```text
 Projects/Embedded/Blink/
-├── src/main.cpp
+├── src/main.c
 ├── platformio.ini
 └── targets/
-    ├── pico-sdk/       # Unverified native example
+    ├── pico-sdk/
+    │   ├── CMakeLists.txt
+    │   └── main.c          # Unverified native example
     └── <other-sdk>/   # Add only when needed
 ```
 
@@ -41,8 +42,8 @@ GPIO/time access, build configuration, and flash/debug commands.
 1. Identify the exact MCU, board revision, debugger, and connection.
 2. Install the vendor-supported SDK and compiler in an isolated environment.
 3. Build and flash the vendor's unmodified blink example first.
-4. Reuse `src/main.cpp` through an Arduino-compatible core, or create a native target
-   with the same on/delay/off/delay behavior.
+4. Reuse `src/main.c` when the target has matching native C APIs, or create a small
+   SDK entry point with the same on/delay/off/delay behavior.
 5. Map the LED GPIO and active polarity from the schematic.
 6. Use a documented delay or scheduler primitive with known units.
 7. Check every SDK result and define a safe error state.

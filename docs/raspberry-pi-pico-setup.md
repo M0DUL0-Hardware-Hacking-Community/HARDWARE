@@ -63,8 +63,8 @@ Every manual installation needs:
 - Git
 - Python 3
 - CMake
-- A native C/C++ compiler for SDK host tools
-- GNU Arm Embedded Toolchain with `arm-none-eabi-gcc` and `arm-none-eabi-g++`
+- A native C/C++ toolchain for SDK host utilities
+- GNU Arm Embedded Toolchain with `arm-none-eabi-gcc`, `arm-none-eabi-g++`, and Newlib
 - Raspberry Pi Pico SDK 2.0.0 or newer
 - Ninja or Make
 - Optional `picotool` for command-line flashing and inspection
@@ -78,9 +78,10 @@ sudo apt install \
   gcc-arm-none-eabi libnewlib-arm-none-eabi libstdc++-arm-none-eabi-newlib
 ```
 
-The `libstdc++-arm-none-eabi-newlib` package name may differ or be bundled with the
-Arm compiler on some distributions. If it is unavailable, install the distribution's
-complete GNU Arm Embedded package or use the official VS Code extension.
+The application sources compile only as C. The C++ compiler and library remain SDK
+tooling prerequisites in Raspberry Pi's official setup; they do not make the Blink
+target C++. Package names can differ, so use the complete GNU Arm Embedded package
+or the official VS Code extension when a listed package is unavailable.
 
 Raspberry Pi OS also provides an official setup script for command-line systems:
 
@@ -331,8 +332,9 @@ a troubleshooting step.
 
 ### Arm compiler is not found
 
-Confirm `arm-none-eabi-gcc` and `arm-none-eabi-g++` are both on PATH. If installed in
-a custom location, pass its parent directory with `-DPICO_TOOLCHAIN_PATH=...`.
+Confirm `arm-none-eabi-gcc` and `arm-none-eabi-g++` are on PATH. The project invokes
+GCC for its C application source; G++ is present for SDK tooling. If installed in a
+custom location, pass their parent directory with `-DPICO_TOOLCHAIN_PATH=...`.
 
 ### Board does not appear in BOOTSEL mode
 

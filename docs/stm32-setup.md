@@ -1,7 +1,7 @@
 # STM32 Development Environment
 
-The Blink project includes a PlatformIO Arduino environment for STM32 Nucleo F401RE.
-ST's native environment uses STM32Cube tools and requires a separate HAL/LL adapter.
+The Blink project builds its C11 application for STM32 Nucleo F401RE with
+PlatformIO's STM32Cube framework. The application uses the STM32 HAL directly.
 
 Official references:
 
@@ -32,7 +32,8 @@ Choose one ST package:
 
 - STM32CubeIDE: graphical configuration, build, flash, and debug environment.
 - STM32CubeCLT: 64-bit Windows, Linux, and macOS command-line toolset containing GNU
-  Arm C/C++, GDB, STM32CubeProgrammer, and device descriptions.
+  Arm C/C++, GDB, STM32CubeProgrammer, and device descriptions. “Arm C/C++” is ST's
+  toolchain name; this project invokes its C compiler for application code.
 
 Download the host-specific installer from ST, verify its checksum when provided, and
 follow the current installation guide. Verify the command-line installation with the
@@ -42,13 +43,13 @@ A typical generated native project uses STM32CubeMX/CubeIDE to configure clocks,
 GPIO, startup code, a linker script, and HAL or LL libraries. Flashing can use the
 IDE or STM32CubeProgrammer through ST-LINK.
 
-The current Blink `src/main.cpp` is an Arduino adapter. Native STM32 support requires
-a `targets/stm32cube/` adapter that:
+The Blink `src/main.c` STM32 branch:
 
-1. Initializes the generated clock and GPIO configuration.
-2. Drives the LED on, waits 500 ms, drives it off, and waits 500 ms.
-3. Uses a bounded application loop or the platform scheduler.
-4. Drives the LED to a known safe level on every error path.
+1. Initializes HAL on the reset/default clock, then enables and configures the LED GPIO.
+2. Drives the LED on, waits for the configured half-period, drives it off, and waits again.
+3. Repeats that sequence in an intentional nonterminating firmware loop.
+4. Fail-stops if `HAL_Init()` fails before GPIO setup; that early failure cannot guarantee an
+   LED indication.
 
 ## Debugging and release checks
 

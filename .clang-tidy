@@ -2,7 +2,6 @@ Checks: >
   -*,
   bugprone-*,
   clang-analyzer-*,
-  modernize-use-nullptr,
   performance-*,
   portability-*,
   readability-duplicate-include,

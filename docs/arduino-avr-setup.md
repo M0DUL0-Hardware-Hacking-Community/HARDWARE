@@ -1,13 +1,13 @@
-# Arduino AVR and Arduino Uno Environment
+# AVR and Arduino Uno Development Environment
 
-The Blink project supports Arduino Uno through PlatformIO's Arduino framework. The
-official Arduino CLI is also useful for native Arduino sketches and CI.
+The Blink project supports Arduino Uno with PlatformIO's Atmel AVR platform.
+`src/main.c` is C11 application code built with AVR GCC and avr-libc; it does not
+use the Arduino framework or sketch runtime.
 
 Official references:
 
-- [Arduino CLI installation](https://docs.arduino.cc/arduino-cli/installation)
-- [Arduino CLI getting started](https://arduino.github.io/arduino-cli/latest/getting-started/)
 - [PlatformIO setup](platformio-setup.md)
+- [Arduino Uno board documentation](https://docs.arduino.cc/hardware/uno-rev3)
 
 ## PlatformIO workflow
 
@@ -18,54 +18,35 @@ pio run -e uno
 pio run -e uno --target upload
 ```
 
-The `uno` board definition supplies `LED_BUILTIN`, normally digital pin 13. Confirm
-the board selection before upload; clones can use a different USB-serial interface.
+The `uno` environment writes the onboard LED through AVR port bit PB5, which the
+Uno Rev3 exposes as digital pin 13. Confirm the exact board before upload; clones
+can use a different USB-serial interface or bootloader.
 
-## Install Arduino CLI
-
-On macOS or Linux with Homebrew:
-
-```sh
-brew update
-brew install arduino-cli
-```
-
-Arduino also provides signed/prebuilt downloads for Windows, macOS, Linux, and Linux
-ARM from its official installation page. Put the executable on PATH and verify:
+PlatformIO installs the matching AVR GCC, avr-libc, and uploader packages in its
+isolated package store. Inspect and record them with:
 
 ```sh
-arduino-cli version
-arduino-cli config init
-arduino-cli core update-index
-arduino-cli core install arduino:avr
-arduino-cli board list
+pio pkg list -e uno
 ```
 
-For a conventional Arduino sketch directory:
-
-```sh
-arduino-cli compile --fqbn arduino:avr:uno /path/to/sketch
-arduino-cli upload -p /dev/ttyACM0 --fqbn arduino:avr:uno /path/to/sketch
-```
-
-Use the port reported by `arduino-cli board list`; Windows uses `COM` ports and
-macOS commonly uses `/dev/cu.usbmodem*` or `/dev/cu.usbserial*`.
-
-The Blink project uses PlatformIO's `src/` layout and is not an Arduino CLI sketch.
-Supporting Arduino CLI directly requires a conventional sketch containing the same
-small setup/loop implementation.
+Do not install a second global toolchain unless another project needs it. If one is
+already installed, verify that PlatformIO is still using the pinned project packages
+rather than whichever compiler happens to appear first on `PATH`.
 
 ## Hardware and upload checks
 
-- Select `arduino:avr:uno`, not a similarly named board with another bootloader.
 - Use a known USB data cable.
 - Close serial monitors before uploading.
 - Install the USB-serial driver required by a clone's interface chip.
 - Never connect an LED without a current-limiting resistor.
 - Respect AVR GPIO voltage and current limits from the board and MCU datasheets.
+- Use the port reported by `pio device list` when automatic detection is ambiguous.
+
+Windows uses `COM` ports. macOS commonly uses `/dev/cu.usbmodem*` or
+`/dev/cu.usbserial*`; Linux commonly uses `/dev/ttyACM0` or `/dev/ttyUSB0`.
 
 ## Reproducibility
 
-Record `arduino-cli version`, the `arduino:avr` core version, and the fully qualified
-board name. In CI, install a specific reviewed core version rather than automatically
-updating immediately before release builds.
+Pin the PlatformIO Atmel AVR platform, then record `pio --version`, `pio pkg list -e
+uno`, the exact board revision, and the uploader. Build, upload, reset, and observe
+the real LED before treating a toolchain update as verified.

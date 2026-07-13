@@ -1,6 +1,5 @@
-idf_component_register(SRCS "main.cpp" "network_catalog.cpp" "security_assessment.cpp" INCLUDE_DIRS ".")
+idf_component_register(SRCS "main.c" "network_catalog.c" "security_assessment.c" INCLUDE_DIRS ".")
 
-target_compile_features(${COMPONENT_LIB} PRIVATE cxx_std_20)
 target_compile_options(
   ${COMPONENT_LIB}
   PRIVATE
@@ -9,7 +8,7 @@ target_compile_options(
     -Werror
     -Wconversion
     -Wshadow
+    -Wstrict-prototypes
     -fanalyzer
-    -fno-exceptions
-    -fno-rtti
+    -std=gnu11
 )

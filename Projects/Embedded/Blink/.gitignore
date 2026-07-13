@@ -1,2 +1,6 @@
 /.pio/
 /build/
+/CMakeLists.txt
+/src/CMakeLists.txt
+/sdkconfig.*
+!/sdkconfig.defaults
