@@ -5,7 +5,7 @@
 
 namespace power10::firmware {
 
-enum class CycleStatus { ok, sensor_error, data_error, publish_error };
+enum class CycleStatus : std::uint8_t { ok, sensor_error, data_error, publish_error };
 
 // A sequence prepared for publishing remains consumed when publishing fails.
 [[nodiscard]] CycleStatus run_device_cycle(DeviceState& state) noexcept;

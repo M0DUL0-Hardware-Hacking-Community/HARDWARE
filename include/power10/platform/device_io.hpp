@@ -5,7 +5,7 @@
 
 namespace power10::platform {
 
-enum class IoStatus { ok, sensor_unavailable, transport_unavailable };
+enum class IoStatus : std::uint8_t { ok, sensor_unavailable, transport_unavailable };
 
 [[nodiscard]] IoStatus read_sensor(SensorReading& reading) noexcept;
 [[nodiscard]] IoStatus publish_telemetry(const Telemetry& telemetry) noexcept;
