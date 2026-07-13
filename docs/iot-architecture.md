@@ -7,8 +7,6 @@ The project separates safety-critical logic from vendor SDKs and operating syste
 - `platform/host` implements device I/O for Linux and macOS simulation.
 - `apps/linux_gateway` is a host executable for integration and gateway development.
 - `platform/<target>` is where an MCU, RTOS, modem, or board adapter belongs.
-- `protocols` contains transport-neutral message contracts.
-- `config` contains non-secret configuration examples only.
 - `cmake/toolchains` contains cross-compilation definitions.
 
 Platform adapters implement `power10/platform/device_io.hpp`. Keep SDK headers and
@@ -20,6 +18,10 @@ Device secrets, certificates, Wi-Fi credentials, and production endpoints must n
 be committed. Provision them with the target's secure storage. Network transports
 must authenticate peers, validate message lengths, enforce timeouts and retry bounds,
 and expose failures through explicit status values.
+
+Telemetry sequence numbers are consumed when a valid record is prepared, even when
+publishing later fails. A gap therefore identifies a failed delivery attempt instead
+of allowing two different attempts to reuse one identifier.
 
 ## Cross-compilation
 

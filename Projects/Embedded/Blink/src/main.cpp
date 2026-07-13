@@ -1,45 +1,46 @@
 #include <Arduino.h>
 
-#include "blink_controller.hpp"
-
-#include <cstdint>
+#include <stdint.h>
 
 #ifndef BLINK_LED_PIN
-#error "Define BLINK_LED_PIN in the target build configuration"
+#error "Define BLINK_LED_PIN in platformio.ini"
+#endif
+
+#ifndef BLINK_LED_ACTIVE_LOW
+#error "Define BLINK_LED_ACTIVE_LOW as 0 or 1 in platformio.ini"
 #endif
 
 namespace {
 
-constexpr std::uint8_t kLedPin{BLINK_LED_PIN};
-constexpr std::uint32_t kBlinkIntervalMilliseconds{500U};
-blink::State state{};
+constexpr auto kLedPin{BLINK_LED_PIN};
 
-void apply_output(const blink::Output& output) {
-  if (output.changed) {
-    digitalWrite(kLedPin, output.led_on ? HIGH : LOW);
-  }
+constexpr uint8_t led_level(const bool enabled, const bool active_low) noexcept {
+  return enabled != active_low ? HIGH : LOW;
 }
 
-}  // namespace
+static_assert(led_level(false, false) == LOW, "active-high off level must be LOW");
+static_assert(led_level(true, false) == HIGH, "active-high on level must be HIGH");
+static_assert(led_level(false, true) == HIGH, "active-low off level must be HIGH");
+static_assert(led_level(true, true) == LOW, "active-low on level must be LOW");
+
+void write_led(const bool enabled) {
+  constexpr bool kLedActiveLow{BLINK_LED_ACTIVE_LOW != 0};
+  static_assert((BLINK_LED_ACTIVE_LOW == 0) || (BLINK_LED_ACTIVE_LOW == 1),
+                "BLINK_LED_ACTIVE_LOW must be 0 or 1");
+  digitalWrite(kLedPin, led_level(enabled, kLedActiveLow));
+}
+
+} // namespace
 
 void setup() {
+  write_led(false);
   pinMode(kLedPin, OUTPUT);
-  blink::Output output{};
-  const auto status{blink::initialize(state, kBlinkIntervalMilliseconds, millis(), output)};
-  if (status != blink::Status::ok) {
-    digitalWrite(kLedPin, LOW);
-    return;
-  }
-  apply_output(output);
 }
 
 void loop() {
-  blink::Output output{};
-  const auto status{blink::update(state, millis(), output)};
-  if (status != blink::Status::ok) {
-    digitalWrite(kLedPin, LOW);
-    delay(kBlinkIntervalMilliseconds);
-    return;
-  }
-  apply_output(output);
+  constexpr uint32_t kHalfPeriodMilliseconds{500U};
+  write_led(true);
+  delay(kHalfPeriodMilliseconds);
+  write_led(false);
+  delay(kHalfPeriodMilliseconds);
 }

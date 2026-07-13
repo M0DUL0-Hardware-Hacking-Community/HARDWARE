@@ -1,7 +1,8 @@
 # ESP32 Development Environment
 
-ESP32 development in this repository can use PlatformIO with Arduino today. A future
-native target can use ESP-IDF without changing the portable Blink state machine.
+ESP32 development in this repository uses the same small Arduino Blink source as the
+other configured PlatformIO boards. A native target can reproduce the behavior with
+ESP-IDF GPIO and delay APIs.
 
 Official references:
 
@@ -16,15 +17,15 @@ Install PlatformIO using the repository guide, then run from
 `Projects/Embedded/Blink`:
 
 ```sh
-pio run -e esp32dev
-pio run -e esp32dev --target upload
+pio run -e esp32devkit_v1
+pio run -e esp32devkit_v1 --target upload
 ```
 
-The generic ESP32 Dev Module environment configures GPIO 2 for the example LED.
+The DOIT ESP32 DevKit V1 environment configures GPIO 2 for the example LED.
 Confirm this mapping against the exact board schematic. ESP32 boards vary, and some
 onboard LEDs are active-low, addressable RGB devices, or absent.
 
-PlatformIO produces the firmware under `.pio/build/esp32dev/`. Use `pio device list`
+PlatformIO produces the firmware under `.pio/build/esp32devkit_v1/`. Use `pio device list`
 to inspect ports and `--upload-port` when more than one device is connected.
 
 ## Native ESP-IDF workflow
@@ -57,9 +58,9 @@ idf.py -p /dev/ttyUSB0 flash monitor
 Replace `esp32` with the actual chip, such as `esp32c3` or `esp32s3`, and replace the
 port for the host operating system. Exit the serial monitor with `Ctrl+]`.
 
-The current Blink directory is a PlatformIO project, not an ESP-IDF project. Native
-ESP-IDF support requires a `targets/esp-idf/` project whose `app_main()` adapter uses
-ESP-IDF GPIO and time APIs while linking `blink_core`.
+The current Blink directory is a PlatformIO Arduino project, not an ESP-IDF project.
+Native ESP-IDF support requires a `targets/esp-idf/` project whose `app_main()` uses
+ESP-IDF GPIO and delay APIs.
 
 ## USB and boot mode
 

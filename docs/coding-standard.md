@@ -4,6 +4,11 @@ The source paper in `reference/10rules.pdf` was written for C. This project appl
 its intent to a deliberately small subset of C++20. Exceptions require a written
 safety case in the code review.
 
+Unit tests verify selected behavior and recovery paths; they do not prove compliance
+with structural rules. Control flow, loop bounds, allocation, function size,
+preprocessing, pointers, and warning cleanliness require source review, compiler
+checks, and static analysis. Hardware timing and GPIO behavior require board tests.
+
 1. **Simple control flow.** Do not use `goto`, exceptions, `setjmp`/`longjmp`,
    direct recursion, indirect recursion, or function pointers. Keep the call graph
    acyclic. Early error returns are allowed when they simplify control flow.

@@ -9,7 +9,7 @@ Checks: >
   readability-function-size,
   readability-redundant-*
 WarningsAsErrors: '*'
-HeaderFilterRegex: '^(include|src)/.*'
+HeaderFilterRegex: '.*/(include|src)/.*'
 CheckOptions:
   readability-function-size.LineThreshold: 60
   readability-function-size.StatementThreshold: 40

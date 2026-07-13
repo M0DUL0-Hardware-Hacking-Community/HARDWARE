@@ -5,7 +5,6 @@ device simulation, testing, and deployment.
 
 ## Repository Areas
 
-- [Course materials](Course-Materials/)
 - [Hardware setup guides](Setup/)
 - [Very easy exercises](Very-Easy/)
 - [Easy exercises](Easy/)
@@ -27,13 +26,13 @@ challenges. Standalone embedded development tutorials belong under `Projects/`.
 
 ## C++ and IoT Development
 
-The repository includes a strict, dependency-free C++20 IoT project structured
-around Gerard J. Holzmann's *The Power of 10: Rules for Developing Safety-Critical
-Code*. The original paper targets C; [the coding standard](docs/coding-standard.md)
-defines this project's C++ interpretation.
+The repository includes a dependency-free C++20 IoT project using a documented
+adaptation of Gerard J. Holzmann's *The Power of 10: Rules for Developing
+Safety-Critical Code*. The original paper targets C; [the coding
+standard](docs/coding-standard.md) defines this project's C++ interpretation.
 
 The project keeps portable domain logic separate from firmware, platform adapters,
-board targets, protocols, configuration, and host applications.
+board targets, and host applications.
 
 ### Build and test
 
@@ -55,8 +54,9 @@ Run the host device simulator with:
 
 For static analysis, install `clang-tidy` and configure with
 `cmake --preset analysis`. The `tools/check.sh` helper runs formatting checks, the
-strict build, tests, and `cppcheck` when those tools are installed. It is POSIX
-`sh` compatible and runs on Linux and macOS without shell-specific extensions.
+strict host builds and tests, every configured PlatformIO build, and `cppcheck` when
+those tools are installed. It is POSIX `sh` compatible and runs on Linux and macOS
+without shell-specific extensions.
 
 The presets contain no absolute paths or fixed generator. For a manual out-of-tree
 build on any platform:
@@ -75,8 +75,6 @@ ctest --test-dir build/local -C Debug --output-on-failure
 - `platform/`: host, board, RTOS, and transport adapters
 - `apps/linux_gateway/`: native IoT simulator and gateway executable
 - `tests/`: dependency-free unit tests
-- `protocols/`: transport-neutral telemetry contracts
-- `config/`: non-secret configuration templates
 - `cmake/toolchains/`: cross-compilation definitions
 - `docs/`: architecture, coding standard, checklist, and source paper
 - `tools/`: local quality checks

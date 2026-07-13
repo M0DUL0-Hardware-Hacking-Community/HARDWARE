@@ -1,7 +1,7 @@
 # Raspberry Pi Pico Development Environment
 
-This guide configures a machine to build and flash this repository's portable Blink
-project for:
+This guide configures a machine to build and flash this repository's optional native
+Blink example for:
 
 - Raspberry Pi Pico with RP2040
 - Raspberry Pi Pico 2 with RP2350, using its Arm Cortex-M33 cores by default
@@ -11,6 +11,10 @@ Use a current stable SDK for both boards. The official
 [Pico SDK repository](https://github.com/raspberrypi/pico-sdk) and
 [Getting Started guide](https://datasheets.raspberrypi.com/pico/getting-started-with-pico.pdf)
 are the authoritative references.
+
+The native example has not been built or hardware-tested in this repository's
+current validation environment. Treat it as a porting example until its compile,
+flash, LED polarity, and timing are verified on the exact board.
 
 ## Choose a setup path
 
@@ -300,7 +304,6 @@ use RISC-V. It can make expected Arm builds configure with the wrong compiler.
 - Use separate build directories for `pico`, `pico2`, and `pico2` RISC-V.
 - Cache downloaded SDKs and compilers, not generated CMake caches across platforms.
 - Build both RP2040 and RP2350 on every change to portable firmware.
-- Run native `blink_tests` before cross-compiling firmware.
 - Store generated UF2 files as versioned CI artifacts.
 - Flash and test real boards before release; compilation is not a hardware test.
 

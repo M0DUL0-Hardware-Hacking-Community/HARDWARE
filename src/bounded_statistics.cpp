@@ -5,6 +5,9 @@
 
 namespace power10 {
 
+static_assert(std::numeric_limits<int>::digits <= 31,
+              "the fixed int64 accumulator requires int to be at most 32 bits");
+
 Status calculate_statistics(const std::span<const int> samples, Statistics& output) noexcept {
   if (samples.empty()) {
     return Status::empty_input;
@@ -28,10 +31,6 @@ Status calculate_statistics(const std::span<const int> samples, Statistics& outp
 
   const auto count{static_cast<std::int64_t>(samples.size())};
   const std::int64_t mean{sum / count};
-  if ((mean < std::numeric_limits<int>::min()) || (mean > std::numeric_limits<int>::max())) {
-    return Status::output_out_of_range;
-  }
-
   output = Statistics{minimum, maximum, static_cast<int>(mean)};
   return Status::ok;
 }

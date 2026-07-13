@@ -51,9 +51,9 @@ arduino-cli upload -p /dev/ttyACM0 --fqbn arduino:avr:uno /path/to/sketch
 Use the port reported by `arduino-cli board list`; Windows uses `COM` ports and
 macOS commonly uses `/dev/cu.usbmodem*` or `/dev/cu.usbserial*`.
 
-The current portable Blink project uses PlatformIO's `src/` and `lib/` layout and is
-not an Arduino CLI sketch. Supporting Arduino CLI directly requires an Arduino sketch
-adapter or a generated sketch project that imports the portable core.
+The Blink project uses PlatformIO's `src/` layout and is not an Arduino CLI sketch.
+Supporting Arduino CLI directly requires a conventional sketch containing the same
+small setup/loop implementation.
 
 ## Hardware and upload checks
 

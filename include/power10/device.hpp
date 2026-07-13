@@ -21,6 +21,7 @@ struct DeviceState final {
 
 enum class DeviceStatus { ok, invalid_temperature, invalid_humidity, sequence_exhausted };
 
+// On failure, leaves state and telemetry unchanged. On success, consumes one sequence.
 [[nodiscard]] DeviceStatus prepare_telemetry(const SensorReading& reading, DeviceState& state,
                                              Telemetry& telemetry) noexcept;
 

@@ -36,6 +36,32 @@ jobs:
       - name: Test
         run: ctest --test-dir build/${{ matrix.preset }} --output-on-failure
       - name: Check formatting
-        run: find apps firmware include platform src tests -type f \( -name '*.cpp' -o -name '*.hpp' \) -exec clang-format --dry-run --Werror {} +
+        if: matrix.compiler == 'clang'
+        run: find apps firmware include platform src tests Projects/Embedded/Blink/src Projects/Embedded/Blink/targets/pico-sdk Projects/Embedded/ConcurrentWifiScanner/src Projects/Embedded/ConcurrentWifiScanner/tests -type f \( -name '*.cpp' -o -name '*.hpp' \) -exec clang-format --dry-run --Werror {} +
       - name: Run cppcheck
+        if: matrix.compiler == 'clang'
         run: cppcheck --project=build/${{ matrix.preset }}/compile_commands.json --enable=warning,style,performance,portability --error-exitcode=1 --suppress=missingIncludeSystem
+
+  embedded:
+    runs-on: ubuntu-latest
+    name: Embedded builds
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install PlatformIO
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y cppcheck
+          python3 -m venv .venv
+          .venv/bin/pip install platformio==6.1.19
+      - name: Test Wi-Fi scanner domain logic
+        run: |
+          cmake -S Projects/Embedded/ConcurrentWifiScanner/tests -B build/wifi-scanner -DCMAKE_BUILD_TYPE=Debug
+          cmake --build build/wifi-scanner
+          ctest --test-dir build/wifi-scanner --output-on-failure
+          cppcheck --project=build/wifi-scanner/compile_commands.json --enable=warning,style,performance,portability --error-exitcode=1 --suppress=missingIncludeSystem
+      - name: Analyze Blink application
+        run: cppcheck Projects/Embedded/Blink/src/main.cpp Projects/Embedded/Blink/targets/pico-sdk/main.cpp --std=c++11 --enable=warning,style,performance,portability --error-exitcode=1 --suppress=missingInclude --suppress=missingIncludeSystem -DBLINK_LED_PIN=2 -DBLINK_LED_ACTIVE_LOW=0 -DHIGH=1 -DLOW=0 -DOUTPUT=1 -DPICO_DEFAULT_LED_PIN=25 -DGPIO_OUT=1
+      - name: Build Blink targets
+        run: .venv/bin/pio run --project-dir Projects/Embedded/Blink
+      - name: Build Wi-Fi scanner firmware
+        run: .venv/bin/pio run --project-dir Projects/Embedded/ConcurrentWifiScanner

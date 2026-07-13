@@ -8,7 +8,7 @@ namespace power10 {
 
 inline constexpr std::size_t kMaximumSamples{64U};
 
-enum class Status { ok, empty_input, too_many_samples, output_out_of_range };
+enum class Status { ok, empty_input, too_many_samples };
 
 struct Statistics final {
   int minimum;
@@ -16,6 +16,7 @@ struct Statistics final {
   int mean;
 };
 
+// Leaves output unchanged when the input size is invalid.
 [[nodiscard]] Status calculate_statistics(std::span<const int> samples,
                                           Statistics& output) noexcept;
 

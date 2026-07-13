@@ -31,7 +31,6 @@ platform/
     esp32/
     raspberry_pi/
     pico/
-protocols/
 src/
 targets/
     esp32/
@@ -115,7 +114,7 @@ hostname, user, network, and SSH access. See the official
 ```sh
 ssh pi@your-pi.local
 git clone <repository-url>
-cd CPP-Test
+cd <repository-directory>
 
 cmake -S . -B build/pi \
   -DCMAKE_BUILD_TYPE=Release \

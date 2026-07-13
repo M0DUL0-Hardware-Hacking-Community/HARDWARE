@@ -2,7 +2,7 @@
 
 PlatformIO provides one project format and command-line interface across many
 microcontroller families. The Blink project currently defines environments for
-ESP32 Dev Module, Arduino Uno, STM32 Nucleo F401RE, and Raspberry Pi Pico RP2040.
+ESP32 DOIT DevKit V1, Arduino Uno, STM32 Nucleo F401RE, and Raspberry Pi Pico RP2040.
 
 Official references:
 
@@ -68,7 +68,7 @@ scientific, or system Python environment.
 ```sh
 pio --version
 pio system info
-pio boards esp32dev
+pio boards esp32doit-devkit-v1
 pio boards uno
 pio boards nucleo_f401re
 ```
@@ -81,7 +81,7 @@ or `Get-Command pio` in PowerShell. Remove duplicate PATH entries before continu
 From `Projects/Embedded/Blink`:
 
 ```sh
-pio run -e esp32dev
+pio run -e esp32devkit_v1
 pio run -e uno
 pio run -e nucleo_f401re
 pio run -e pico_rp2040
@@ -93,13 +93,13 @@ on first use. This can take several minutes and requires network access.
 Build and upload one target:
 
 ```sh
-pio run -e esp32dev --target upload
+pio run -e esp32devkit_v1 --target upload
 ```
 
 Specify a port only when automatic detection is ambiguous:
 
 ```sh
-pio run -e esp32dev --target upload --upload-port /dev/ttyUSB0
+pio run -e esp32devkit_v1 --target upload --upload-port /dev/ttyUSB0
 pio device list
 pio device monitor --baud 115200
 ```
@@ -120,18 +120,19 @@ rules. Those approaches create root-owned PlatformIO caches and weaken the machi
 ## Reproducible projects
 
 An unversioned entry such as `platform = espressif32` tracks PlatformIO's selected
-release. Before releasing firmware, pin and record a version that CI and hardware
-tests have validated:
+release. This repository pins the platform releases used by its build checks. When
+upgrading one, validate the build and the exact hardware before committing the new
+version:
 
 ```ini
-[env:esp32dev]
-platform = espressif32@<reviewed-version>
-board = esp32dev
+[env:esp32devkit_v1]
+platform = espressif32@7.0.1
+board = esp32doit-devkit-v1
 framework = arduino
 ```
 
 Do not blindly copy version numbers from another project. Use `pio pkg list` to
-record the actual platform, framework, compiler, and uploader versions.
+record the actual framework, compiler, and uploader versions too.
 
 ## Troubleshooting
 

@@ -1,7 +1,8 @@
 #include "power10/platform/device_io.hpp"
 
+#include <cinttypes>
 #include <cstdint>
-#include <iostream>
+#include <cstdio>
 
 namespace power10::platform {
 
@@ -13,10 +14,11 @@ IoStatus read_sensor(SensorReading& reading) noexcept {
 }
 
 IoStatus publish_telemetry(const Telemetry& telemetry) noexcept {
-  std::cout << "sequence=" << telemetry.sequence
-            << " temperature_mc=" << telemetry.reading.temperature_millicelsius
-            << " humidity_mp=" << telemetry.reading.humidity_millipercent << '\n';
-  if (!std::cout) {
+  const int written{std::printf("sequence=%" PRIu32 " temperature_mc=%" PRId32
+                                " humidity_mp=%" PRIu32 "\n",
+                                telemetry.sequence, telemetry.reading.temperature_millicelsius,
+                                telemetry.reading.humidity_millipercent)};
+  if ((written < 0) || (std::fflush(stdout) != 0)) {
     return IoStatus::transport_unavailable;
   }
   return IoStatus::ok;

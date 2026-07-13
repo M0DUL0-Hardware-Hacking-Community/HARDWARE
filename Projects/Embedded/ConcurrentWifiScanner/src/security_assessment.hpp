@@ -5,21 +5,8 @@
 
 namespace wifi_scanner {
 
-enum class Authentication : std::uint8_t {
-  open,
-  wep,
-  wpa,
-  wpa2,
-  wpa_wpa2,
-  wpa2_enterprise,
-  wpa3,
-  wpa2_wpa3,
-  wapi,
-  owe,
-  unknown
-};
+enum class Authentication : std::uint8_t { open, wep, legacy_wpa, transition, modern, unknown };
 
-enum class Cipher : std::uint8_t { other, tkip, tkip_ccmp };
 enum class RiskLevel : std::uint8_t { low, medium, high, critical };
 enum class Finding : std::uint8_t {
   none,
@@ -34,7 +21,8 @@ enum class Finding : std::uint8_t {
 
 struct AdvertisedSecurity final {
   Authentication authentication;
-  Cipher pairwise_cipher;
+  bool legacy_tkip;
+  bool unknown_cipher;
   bool wps_enabled;
 };
 

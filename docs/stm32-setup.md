@@ -46,10 +46,9 @@ The current Blink `src/main.cpp` is an Arduino adapter. Native STM32 support req
 a `targets/stm32cube/` adapter that:
 
 1. Initializes the generated clock and GPIO configuration.
-2. Supplies a wrapping millisecond counter, commonly derived from the HAL tick.
-3. Applies `blink::Output` through HAL, LL, or verified register access.
-4. Links the unchanged `blink_core` sources.
-5. Drives the LED to a known safe level on every error path.
+2. Drives the LED on, waits 500 ms, drives it off, and waits 500 ms.
+3. Uses a bounded application loop or the platform scheduler.
+4. Drives the LED to a known safe level on every error path.
 
 ## Debugging and release checks
 
